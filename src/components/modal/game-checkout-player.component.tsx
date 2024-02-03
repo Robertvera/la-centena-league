@@ -11,6 +11,7 @@ import horse from "../../assets/images/white-horse-full.svg";
 import emptyPerfect from "../../assets/images/perfect-empty.svg";
 import perfect from "../../assets/images/perfect-full.svg";
 import { gameScore, handleExtraPoints } from "../../signals/scores.signals";
+import { NumberPicker } from "./number-picker.component";
 
 interface Props {
   player: Player;
@@ -29,10 +30,6 @@ export const GameCheckoutPlayer: FC<Props> = ({
     gameScore.value[index].value.gamePoints.value = positionPoints;
     gameScore.value[index].value.position = position;
   }, [positionPoints, index, position]);
-
-  const updateMpr = (ev: ChangeEvent<HTMLInputElement>) => {
-    gameScore.value[index].value.mpr = +ev.target.value;
-  };
 
   const getBadge = () => {
     switch (position) {
@@ -91,12 +88,7 @@ export const GameCheckoutPlayer: FC<Props> = ({
             />
           </div>
           <div className="flex mt-3">
-            <span className="mr-2">MPR: </span>
-            <input
-              type="number"
-              className="w-full border-b-2 border-b-blue-500"
-              onChange={updateMpr}
-            />
+            <NumberPicker index={index}/>
           </div>
         </div>
       </div>
