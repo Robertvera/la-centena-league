@@ -1,8 +1,9 @@
+import { Game, GameDto, PlayerStatsDto } from "../interfaces/game.interface";
 import { gameScore } from "../signals/scores.signals";
 
 const isValidGameMpr = (gameMpr: number | undefined | null): boolean => {
   return gameMpr !== undefined && gameMpr !== null && gameMpr <= 9;
-}
+};
 
 export const mapGameScoreToSupabase = (): any => {
   const mappedGameScore = gameScore.value.map((score) => {
@@ -30,4 +31,27 @@ export const mapGameScoreToSupabase = (): any => {
   }
 
   return mappedGameScore;
+};
+
+export const mapGameStats = (lastFiveGames: GameDto[]): Game[] => {
+  return lastFiveGames.map((game: GameDto) => {
+    return {
+      id: game.id,
+      game: game.game_data.map((playerStats: PlayerStatsDto) => {
+        return {
+          avgMpr: playerStats.avg_mpr,
+          gameMpr: playerStats.game_mpr,
+          position: playerStats.position,
+          hatTrick: playerStats.hat_trick,
+          playerId: playerStats.player_id,
+          fullClosed: playerStats.full_closed,
+          gamePoints: playerStats.game_points,
+          playerName: playerStats.player_name,
+          whiteHorse: playerStats.white_horse,
+          nineOfNine: playerStats.nine_of_nine,
+          perfectGame: playerStats.perfect_game,
+        };
+      }),
+    };
+  });
 };

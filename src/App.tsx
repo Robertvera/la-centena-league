@@ -41,28 +41,30 @@ function App() {
   return (
     <>
       {errorMessage.value && <ErrorSnackbar error={errorMessage.value} />}
-      <Header />
-      <div className="container mx-auto overflow-auto form-container h-full">
-        <div className="h-full">
-          {isTableTab && <TableTab />}
-          {isStatsTab && <StatsTab />}
+      <div className="flex flex-col">
+        <Header />
+        <div className="container mx-auto overflow-auto form-container h-full">
+          <div className="h-full">
+            {isTableTab && <TableTab />}
+            {isStatsTab && <StatsTab />}
+          </div>
+          <Modal isOpen={isModalOpen}>
+            <ModalTitle />
+            <Swiper
+              pagination={{ dynamicBullets: true }}
+              modules={[Pagination]}
+              className="mt-3"
+            >
+              <SwiperSlide>
+                <SelectPlayers allPlayers={allPlayers.value} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <GameCheckout selectedPlayers={selectedPlayers.value} />
+              </SwiperSlide>
+            </Swiper>
+          </Modal>
         </div>
         <Navbar />
-        <Modal isOpen={isModalOpen}>
-          <ModalTitle />
-          <Swiper
-            pagination={{ dynamicBullets: true }}
-            modules={[Pagination]}
-            className="mt-3"
-          >
-            <SwiperSlide>
-              <SelectPlayers allPlayers={allPlayers.value} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <GameCheckout selectedPlayers={selectedPlayers.value} />
-            </SwiperSlide>
-          </Swiper>
-        </Modal>
       </div>
     </>
   );
