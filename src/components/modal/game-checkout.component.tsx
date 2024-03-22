@@ -1,12 +1,11 @@
 import { FC } from "react";
 import { Player } from "../../interfaces/player.interface";
 import { GameCheckoutPlayer } from "./game-checkout-player.component";
-import { gameScore } from "../../signals/scores.signals";
-import { supabase } from "../../signals/supabase.signals";
-import { allPlayers, getAllPlayers } from "../../signals/players.singals";
 import { mapGameScoreToSupabase } from "../../mappers";
 import { errorMessage } from "../../signals/error.signals";
 import { sendScore, updatePlayerStats } from "../../services/score.service";
+import { leagueData } from "../../signals/league.signals";
+import { updateLeagueTargetScore } from "../../services/league.service";
 
 interface Props {
   selectedPlayers: Player[];
@@ -19,8 +18,14 @@ export const GameCheckout: FC<Props> = ({ selectedPlayers }) => {
     if (!mappedGameScore) {
       errorMessage.value = "Error! MPR value not correct";
     } else {
+      const totalPoints = mappedGameScore.reduce(
+        (acc: number, score: any) => acc + score.game_points,
+        0
+      );
+
       await sendScore(mappedGameScore);
       await updatePlayerStats(mappedGameScore);
+      await updateLeagueTargetScore(leagueData.value.id, totalPoints);
 
       window.location.reload();
     }

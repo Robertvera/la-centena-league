@@ -8,32 +8,17 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { SelectPlayers } from "./components/modal/select-players.component";
-import {
-  allPlayers,
-  getAllPlayers,
-  orderPlayersByScore,
-  selectedPlayers,
-} from "./signals/players.singals";
+import { allPlayers, selectedPlayers } from "./signals/players.singals";
 import { GameCheckout } from "./components/modal/game-checkout.component";
-import { useEffect } from "react";
 import { errorMessage } from "./signals/error.signals";
 import { ErrorSnackbar } from "./components/error.component";
 import { TableTab } from "./components/table/table-tab.component";
 import { Navbar } from "./components/navbar.component";
 import { StatsTab } from "./components/stats/stats-tab.component";
+import { useLoadLeague } from "./hooks/use-load-league.hook";
 
 function App() {
-  useEffect(() => {
-    const fetchPlayers = async () => {
-      const players = await getAllPlayers();
-
-      if (players) {
-        allPlayers.value = orderPlayersByScore(players);
-      }
-    };
-
-    fetchPlayers();
-  }, []);
+  const { fetching } = useLoadLeague();
 
   const isTableTab = activeTab.value === "table";
   const isStatsTab = activeTab.value === "stats";
@@ -41,11 +26,11 @@ function App() {
   return (
     <>
       {errorMessage.value && <ErrorSnackbar error={errorMessage.value} />}
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full">
         <Header />
         <div className="container mx-auto overflow-auto form-container h-full">
           <div className="h-full">
-            {isTableTab && <TableTab />}
+            {isTableTab && <TableTab fetching={fetching} />}
             {isStatsTab && <StatsTab />}
           </div>
           <Modal isOpen={isModalOpen}>

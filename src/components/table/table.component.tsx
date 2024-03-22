@@ -23,15 +23,18 @@ export const Table: FC<Props> = ({ players }) => {
           const avg = score / games;
           const position = index + 1;
 
+          const isNotConsolidated = games<= 25;
+          const consolidatedClass = isNotConsolidated ? "text-red-500" : "";
+
           return (
             <tr key={id} className="border-y border-slate-400">
               <td className="text-center font-bold bg-green-400">{position}</td>
-              <td className="font-bold px-2 bg-white">{name}</td>
-              <td className="text-center bg-gray-200">{score}</td>
-              <td className="text-center bg-white">{first_position}</td>
-              <td className="text-center bg-gray-200">{games}</td>
-              <td className="text-center bg-white">{avg ? avg.toFixed(2) : 0}</td>
-              <td className="text-center bg-gray-200">{mpr.toFixed(2)}</td>
+              <td className={`${consolidatedClass} font-bold px-2 bg-white`}>{name}</td>
+              <td className={`${consolidatedClass} text-center bg-gray-200`}>{score}</td>
+              <td className={`${consolidatedClass} text-center bg-white`}>{first_position}</td>
+              <td className={`${consolidatedClass} text-center bg-gray-200`}>{games}</td>
+              <td className={`${consolidatedClass} text-center bg-white`}>{avg ? avg.toFixed(2) : 0}</td>
+              <td className={`${consolidatedClass} text-center bg-gray-200`}>{mpr.toFixed(2)}</td>
             </tr>
           );
         })}

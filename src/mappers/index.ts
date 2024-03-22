@@ -1,4 +1,5 @@
 import { Game, GameDto, PlayerStatsDto } from "../interfaces/game.interface";
+import { Player, PlayerDto } from "../interfaces/player.interface";
 import { gameScore } from "../signals/scores.signals";
 
 const isValidGameMpr = (gameMpr: number | undefined | null): boolean => {
@@ -52,6 +53,29 @@ export const mapGameStats = (lastFiveGames: GameDto[]): Game[] => {
           perfectGame: playerStats.perfect_game,
         };
       }),
+    };
+  });
+};
+
+export const mapPlayerData = (playerData: PlayerDto[]): Player[] => {
+  return playerData.map((player) => {
+    const avg = player.games ? player.score / player.games : 0;
+    return {
+      id: player.id,
+      name: player.name,
+      score: player.score,
+      first_position: player.first_position,
+      second_position: player.second_position,
+      third_position: player.third_position,
+      games: player.games,
+      avg: +avg.toFixed(2),
+      mpr: player.mpr,
+      closed: player.closed,
+      hat_trick: player.hat_trick,
+      nine_nine: player.nine_nine,
+      white_horse: player.white_horse,
+      perfect: player.perfect,
+      avatar: player.avatar,
     };
   });
 };

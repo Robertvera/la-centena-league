@@ -1,8 +1,7 @@
 import { FC, useEffect } from "react";
-import TopPositions from "./components/top-positions.component";
-import TopExtraPoints from "./components/top-extra-points.component";
-import { getLastGames, lastGames } from "../../signals/games.signals";
+import { lastGames } from "../../signals/games.signals";
 import { LastGames } from "./components/last-games.component";
+import { getLastGames } from "../../services/games.service";
 
 export const StatsTab: FC = () => {
   useEffect(() => {

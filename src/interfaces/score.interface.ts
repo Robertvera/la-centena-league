@@ -14,7 +14,7 @@ export interface Score {
 }
 
 export interface GameScoreSupabase {
-  player_id: string;
+  player_id: number;
   player_name: string;
   avg_mpr: number;
   game_mpr: number;
