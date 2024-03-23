@@ -23,7 +23,7 @@ export const Table: FC<Props> = ({ players }) => {
           const avg = score / games;
           const position = index + 1;
 
-          const isNotConsolidated = games<= 25;
+          const isNotConsolidated = games < 25;
           const consolidatedClass = isNotConsolidated ? "text-red-500" : "";
 
           return (

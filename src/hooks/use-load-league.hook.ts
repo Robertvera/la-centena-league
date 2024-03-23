@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllPlayers } from "../services/players.service";
-import { allPlayers, orderPlayersByScore } from "../signals/players.singals";
+import { allPlayers, orderPlayersByAvgScore } from "../signals/players.singals";
 import { getActiveLeague } from "../services/league.service";
 import { leagueData } from "../signals/league.signals";
 
@@ -12,7 +12,7 @@ export const useLoadLeague = () => {
       const players = await getAllPlayers();
 
       if (players) {
-        allPlayers.value = orderPlayersByScore(players);
+        allPlayers.value = orderPlayersByAvgScore(players);
       }
     };
 
