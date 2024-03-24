@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import Picker from "react-mobile-picker";
-import { gameScore } from "../../signals/scores.signals";
+import { gameScore } from "../../../signals/scores.signals";
 
 type Digits = {
   first: string[];

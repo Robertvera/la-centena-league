@@ -1,16 +1,16 @@
-import { ChangeEvent, FC, useEffect } from "react";
-import { Player } from "../../interfaces/player.interface";
-import emptyFullClosed from "../../assets/images/closed-empty.svg";
-import fullClosed from "../../assets/images/closed-full.svg";
-import emptyHattrick from "../../assets/images/hattrick-empty.svg";
-import hattrick from "../../assets/images/hattrick-full.svg";
-import emptyNine from "../../assets/images/nine-empty.svg";
-import nine from "../../assets/images/nine-full.svg";
-import emptyHorse from "../../assets/images/white-horse-empty.svg";
-import horse from "../../assets/images/white-horse-full.svg";
-import emptyPerfect from "../../assets/images/perfect-empty.svg";
-import perfect from "../../assets/images/perfect-full.svg";
-import { gameScore, handleExtraPoints } from "../../signals/scores.signals";
+import { Player } from "interfaces/player.interface";
+import { FC, useEffect } from "react";
+import { gameScore, handleExtraPoints } from "signals/scores.signals";
+import emptyFullClosed from "assets/images/closed-empty.svg";
+import fullClosed from "assets/images/closed-full.svg";
+import emptyHattrick from "assets/images/hattrick-empty.svg";
+import hattrick from "assets/images/hattrick-full.svg";
+import emptyNine from "assets/images/nine-empty.svg";
+import nine from "assets/images/nine-full.svg";
+import emptyHorse from "assets/images/white-horse-empty.svg";
+import horse from "assets/images/white-horse-full.svg";
+import emptyPerfect from "assets/images/perfect-empty.svg";
+import perfect from "assets/images/perfect-full.svg";
 import { NumberPicker } from "./number-picker.component";
 
 interface Props {

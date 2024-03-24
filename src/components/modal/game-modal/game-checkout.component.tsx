@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { Player } from "../../interfaces/player.interface";
+import { Player } from "../../../interfaces/player.interface";
 import { GameCheckoutPlayer } from "./game-checkout-player.component";
-import { mapGameScoreToSupabase } from "../../mappers";
-import { errorMessage } from "../../signals/error.signals";
-import { sendScore, updatePlayerStats } from "../../services/score.service";
-import { leagueData } from "../../signals/league.signals";
-import { updateLeagueTargetScore } from "../../services/league.service";
+import { mapGameScoreToSupabase } from "../../../mappers";
+import { errorMessage } from "../../../signals/error.signals";
+import { sendScore, updatePlayerStats } from "../../../services/score.service";
+import { leagueData } from "../../../signals/league.signals";
+import { updateLeagueTargetScore } from "../../../services/league.service";
 
 interface Props {
   selectedPlayers: Player[];
@@ -58,13 +58,3 @@ export const GameCheckout: FC<Props> = ({ selectedPlayers }) => {
     </div>
   );
 };
-
-// - punts de victoria: num de jugadors - 1
-// - l'últim no guanya mai punts de victoria
-// - punts 2n, 3r, 4t... : num de jugadors - posició
-// - punts extres:
-//     - tot tancat: +1 punt
-//     - 9 de 9: +2 punts
-//     - marcador a 0: +3 punts
-//     - white horse (3 x T20): +3 punts
-//     - hat-trick (3 x bull): +2 punts

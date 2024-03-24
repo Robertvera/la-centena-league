@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { Player } from "../../interfaces/player.interface";
-import { selectedPlayers } from "../../signals/players.singals";
-import { defaultScore, gameScore } from "../../signals/scores.signals";
+import { Player } from "../../../interfaces/player.interface";
+import { selectedPlayers } from "../../../signals/players.singals";
+import { defaultScore, gameScore } from "../../../signals/scores.signals";
 import { signal } from "@preact/signals-react";
 
 interface Props {

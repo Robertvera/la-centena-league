@@ -1,3 +1,4 @@
+import { HistoricData, HistoricDataDto } from "interfaces/historic.interface";
 import { Game, GameDto, PlayerStatsDto } from "../interfaces/game.interface";
 import { Player, PlayerDto } from "../interfaces/player.interface";
 import { gameScore } from "../signals/scores.signals";
@@ -76,6 +77,33 @@ export const mapPlayerData = (playerData: PlayerDto[]): Player[] => {
       white_horse: player.white_horse,
       perfect: player.perfect,
       avatar: player.avatar,
+    };
+  });
+};
+
+export const mapHistoricData = (
+  historicData: HistoricDataDto[]
+): HistoricData[] => {
+  return historicData.map((historic) => {
+    const avg = historic.games ? historic.score / historic.games : 0;
+    return {
+      id: historic.id,
+      name: historic.name,
+      score: historic.score,
+      first_position: historic.first_position,
+      second_position: historic.second_position,
+      third_position: historic.third_position,
+      games: historic.games,
+      avg: +avg.toFixed(2),
+      mpr: historic.mpr,
+      closed: historic.closed,
+      hat_trick: historic.hat_trick,
+      nine_nine: historic.nine_nine,
+      white_horse: historic.white_horse,
+      perfect: historic.perfect,
+      leagues_won: historic.leagues_won,
+      leagues_second: historic.leagues_second,
+      leagues_third: historic.leagues_third,
     };
   });
 };

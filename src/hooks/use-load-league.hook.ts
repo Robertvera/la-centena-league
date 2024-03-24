@@ -3,6 +3,8 @@ import { getAllPlayers } from "../services/players.service";
 import { allPlayers, orderPlayersByAvgScore } from "../signals/players.singals";
 import { getActiveLeague } from "../services/league.service";
 import { leagueData } from "../signals/league.signals";
+import { getHistoricData } from "services/historic.service";
+import { historicData } from "signals/historic.signals";
 
 export const useLoadLeague = () => {
   const [fetching, setFetching] = useState(true);
@@ -23,7 +25,17 @@ export const useLoadLeague = () => {
       }
     };
 
-    Promise.all([fetchPlayers(), loadLeague()]).then(() => setFetching(false));
+    const fetchHistoricData = async () => {
+      const historic = await getHistoricData();
+
+      if (historic) {
+        historicData.value = historic;
+      }
+    };
+
+    Promise.all([fetchPlayers(), loadLeague(), fetchHistoricData()]).then(() =>
+      setFetching(false)
+    );
   }, []);
 
   return { fetching };

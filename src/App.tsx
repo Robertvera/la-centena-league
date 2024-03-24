@@ -1,25 +1,28 @@
 import "./App.css";
 import { Header } from "./components/header.component";
 import Modal from "./components/modal/modal.component";
-import { ModalTitle } from "./components/modal/modal-title.component";
-import { activeTab, isModalOpen } from "./signals/modal.signals";
+
+import { activeTab } from "./signals/modal.signals";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import { SelectPlayers } from "./components/modal/select-players.component";
+import { SelectPlayers } from "./components/modal/game-modal/select-players.component";
 import { allPlayers, selectedPlayers } from "./signals/players.singals";
-import { GameCheckout } from "./components/modal/game-checkout.component";
+import { GameCheckout } from "./components/modal/game-modal/game-checkout.component";
 import { errorMessage } from "./signals/error.signals";
 import { ErrorSnackbar } from "./components/error.component";
 import { TableTab } from "./components/table/table-tab.component";
 import { Navbar } from "./components/navbar.component";
 import { StatsTab } from "./components/stats/stats-tab.component";
 import { useLoadLeague } from "./hooks/use-load-league.hook";
+import { ModalTitle } from "components/modal/shared/modal-title.component";
+import { leagueData } from "signals/league.signals";
+import { LeaguePodium } from "components/modal/league-modal/league-podium.component";
+import { FinishLeagueButton } from "components/modal/league-modal/finish-league-button.component";
 
 function App() {
   const { fetching } = useLoadLeague();
-
   const isTableTab = activeTab.value === "table";
   const isStatsTab = activeTab.value === "stats";
 
@@ -33,8 +36,8 @@ function App() {
             {isTableTab && <TableTab fetching={fetching} />}
             {isStatsTab && <StatsTab />}
           </div>
-          <Modal isOpen={isModalOpen}>
-            <ModalTitle />
+          <Modal type="game">
+            <ModalTitle text="New Game" />
             <Swiper
               pagination={{ dynamicBullets: true }}
               modules={[Pagination]}
@@ -47,6 +50,13 @@ function App() {
                 <GameCheckout selectedPlayers={selectedPlayers.value} />
               </SwiperSlide>
             </Swiper>
+          </Modal>
+          <Modal type="league">
+            <div className="flex flex-col justify-around h-full">
+              <ModalTitle text={`League #${leagueData.value.id} finished 🎉`} />
+              <LeaguePodium />
+              <FinishLeagueButton />
+            </div>
           </Modal>
         </div>
         <Navbar />
