@@ -1,11 +1,21 @@
 import { GameScoreSupabase } from "../interfaces/score.interface";
 import { supabase } from "../signals/supabase.signals";
-import { GAMES_TABLE, INCREMENT_EXTRA_POINTS_FN, INCREMENT_GAMES_COUNTER_FN, INCREMENT_POSITION_FN, INCREMENT_SCORE_FN, INCREMENT_TARGET_SCORE_FN, UPDATE_MPR_FN } from "./supabase.constants";
+import {
+  GAMES_TABLE,
+  INCREMENT_EXTRA_POINTS_FN,
+  INCREMENT_GAMES_COUNTER_FN,
+  INCREMENT_POSITION_FN,
+  INCREMENT_SCORE_FN,
+  UPDATE_MPR_FN,
+} from "./supabase.constants";
 
-export const sendScore = async (mappedGameScore: GameScoreSupabase[]) => {
+export const sendScore = async (
+  mappedGameScore: GameScoreSupabase[],
+  leagueId: number
+) => {
   return await supabase.value
     .from(GAMES_TABLE)
-    .insert({ game_data: mappedGameScore })
+    .insert({ game_data: mappedGameScore, league_id: leagueId })
     .select();
 };
 
@@ -42,17 +52,20 @@ export const updatePlayerStats = async (
       }
     );
 
-    const positionIncrement = await supabase.value.rpc(
-      INCREMENT_POSITION_FN,
-      {
-        player: playerGameScore.player_name,
-        is_first_position: playerGameScore.position === 1,
-        is_second_position: playerGameScore.position === 2,
-        is_third_position: playerGameScore.position === 3,
-      }
-    );
+    const positionIncrement = await supabase.value.rpc(INCREMENT_POSITION_FN, {
+      player: playerGameScore.player_name,
+      is_first_position: playerGameScore.position === 1,
+      is_second_position: playerGameScore.position === 2,
+      is_third_position: playerGameScore.position === 3,
+    });
 
-    return Promise.all([gamesIncrement, scoreIncrement, mprIncrement, extraPointsIncrement, positionIncrement]);
+    return Promise.all([
+      gamesIncrement,
+      scoreIncrement,
+      mprIncrement,
+      extraPointsIncrement,
+      positionIncrement,
+    ]);
   });
 
   await Promise.all(promises);

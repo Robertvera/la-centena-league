@@ -40,7 +40,7 @@ export const Table: FC<Props> = ({ players }) => {
               <td className="text-center font-bold bg-green-400">{position}</td>
               <td className={`${consolidatedClass} font-bold px-2 bg-white flex items-center`}>
                 {name}
-                <div className="ml-1">
+                <div className="ml-1 flex">
                   { leaguesWon > 0 && Array.from({ length: leaguesWon }).map((_, index) => (
                     <img src={starGold} alt="star" className="w-2 h-2" key={index} />
                   ))}

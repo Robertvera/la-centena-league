@@ -2,7 +2,7 @@ import "./App.css";
 import { Header } from "./components/header.component";
 import Modal from "./components/modal/modal.component";
 
-import { activeTab } from "./signals/modal.signals";
+import { activeTab, modalState } from "./signals/modal.signals";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -36,28 +36,35 @@ function App() {
             {isTableTab && <TableTab fetching={fetching} />}
             {isStatsTab && <StatsTab />}
           </div>
-          <Modal type="game">
-            <ModalTitle text="New Game" />
-            <Swiper
-              pagination={{ dynamicBullets: true }}
-              modules={[Pagination]}
-              className="mt-3"
-            >
-              <SwiperSlide>
-                <SelectPlayers allPlayers={allPlayers.value} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <GameCheckout selectedPlayers={selectedPlayers.value} />
-              </SwiperSlide>
-            </Swiper>
-          </Modal>
-          <Modal type="league">
-            <div className="flex flex-col justify-around h-full">
-              <ModalTitle text={`League #${leagueData.value.id} finished 🎉`} />
-              <LeaguePodium />
-              <FinishLeagueButton />
-            </div>
-          </Modal>
+          {modalState.value.game.isOpen && (
+              <Modal type="game">
+                <ModalTitle text="New Game" />
+                <Swiper
+                  pagination={{ dynamicBullets: true }}
+                  modules={[Pagination]}
+                  className="mt-3"
+                >
+                  <SwiperSlide>
+                    <SelectPlayers allPlayers={allPlayers.value} />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <GameCheckout selectedPlayers={selectedPlayers.value} />
+                  </SwiperSlide>
+                </Swiper>
+              </Modal>
+          )}
+
+          {modalState.value.league.isOpen && (
+            <Modal type="league">
+              <div className="flex flex-col justify-around h-full">
+                <ModalTitle
+                  text={`League #${leagueData.value.id} finished 🎉`}
+                />
+                <LeaguePodium />
+                <FinishLeagueButton />
+              </div>
+            </Modal>
+          )}
         </div>
         <Navbar />
       </div>

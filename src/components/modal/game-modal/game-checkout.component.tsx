@@ -23,7 +23,7 @@ export const GameCheckout: FC<Props> = ({ selectedPlayers }) => {
         0
       );
 
-      await sendScore(mappedGameScore);
+      await sendScore(mappedGameScore, leagueData.value.id);
       await updatePlayerStats(mappedGameScore);
       await updateLeagueTargetScore(leagueData.value.id, totalPoints);
 
