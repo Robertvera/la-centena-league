@@ -29,7 +29,7 @@ export const Table: FC<Props> = ({ players }) => {
           const avg = score / games;
           const position = index + 1;
 
-          const isNotConsolidated = games < 25;
+          const isNotConsolidated = games < 14;
           const consolidatedClass = isNotConsolidated ? "text-red-500" : "";
           const leaguesWon =
             historicData.value.find((player) => player.id === id)
